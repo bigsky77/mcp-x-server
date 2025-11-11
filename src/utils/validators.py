@@ -50,3 +50,26 @@ def validate_limit(limit: Optional[int], max_limit: int = 100) -> int:
     if limit > max_limit:
         raise ValidationError(f"Limit cannot exceed {max_limit}")
     return limit
+
+
+def validate_user_id(user_id: str) -> str:
+    """Validate user ID format."""
+    if not user_id or not user_id.isdigit():
+        raise ValidationError(f"Invalid user ID: {user_id}")
+    return user_id
+
+
+def validate_list_id(list_id: str) -> str:
+    """Validate list ID format."""
+    if not list_id or not list_id.isdigit():
+        raise ValidationError(f"Invalid list ID: {list_id}")
+    return list_id
+
+
+def validate_list_name(name: str, max_length: int = 25) -> str:
+    """Validate list name."""
+    if not name or not name.strip():
+        raise ValidationError("List name cannot be empty")
+    if len(name) > max_length:
+        raise ValidationError(f"List name exceeds {max_length} characters")
+    return name.strip()
