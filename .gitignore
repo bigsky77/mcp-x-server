@@ -2,6 +2,8 @@
 config/cookies.json
 config/cookies*.txt
 config/*.json
+!config/cookies.example.json
+!config/config.yaml
 accounts.json
 accounts.db
 *.env

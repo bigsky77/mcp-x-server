@@ -1,0 +1,110 @@
+[
+  {
+    "name": "__cf_bm",
+    "value": "YOUR_CLOUDFLARE_TOKEN_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2025-11-09T10:01:39.227Z",
+    "size": 205,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "priority": "Medium"
+  },
+  {
+    "name": "__cuid",
+    "value": "YOUR_CUID_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-12-14T09:28:22.000Z",
+    "size": 38,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax",
+    "priority": "Medium"
+  },
+  {
+    "name": "_ga",
+    "value": "GA1.2.XXXXXXXXX.XXXXXXXXXX",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-12-13T14:10:29.785Z",
+    "size": 29,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": null,
+    "priority": "Medium"
+  },
+  {
+    "name": "auth_token",
+    "value": "YOUR_AUTH_TOKEN_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-12-14T09:28:21.383Z",
+    "size": 50,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "priority": "Medium"
+  },
+  {
+    "name": "ct0",
+    "value": "YOUR_CT0_CSRF_TOKEN_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-12-14T09:28:21.586Z",
+    "size": 163,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "priority": "Medium"
+  },
+  {
+    "name": "guest_id",
+    "value": "v1%3AYOUR_GUEST_ID_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-12-14T09:28:21.586Z",
+    "size": 31,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None",
+    "priority": "Medium"
+  },
+  {
+    "name": "kdt",
+    "value": "YOUR_KDT_TOKEN_HERE",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-11-10T18:05:29.615Z",
+    "size": 43,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": null,
+    "priority": "Medium"
+  },
+  {
+    "name": "lang",
+    "value": "en",
+    "domain": "x.com",
+    "path": "/",
+    "expires": "Session",
+    "size": 6,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": null,
+    "priority": "Medium"
+  },
+  {
+    "name": "twid",
+    "value": "u%3DYOUR_TWITTER_USER_ID",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-11-09T09:31:36.267Z",
+    "size": 27,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None",
+    "priority": "Medium"
+  }
+]
