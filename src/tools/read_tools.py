@@ -97,3 +97,191 @@ class ReadTools:
 
         mentions = await self.client.get_mentions(username, limit=limit)
         return mentions
+
+    async def get_tweet_context(
+        self, tweet_id: str, include_replies: Optional[bool] = True, max_depth: Optional[int] = 10
+    ) -> Dict[str, Any]:
+        """
+        Get full conversation thread and context for a tweet.
+
+        Args:
+            tweet_id: Tweet ID
+            include_replies: Whether to include replies (default: True)
+            max_depth: Maximum depth for parent tweets (default: 10)
+
+        Returns:
+            Conversation context with parent tweets, main tweet, and replies
+        """
+        tweet_id = validate_tweet_id(tweet_id)
+        context = await self.client.get_tweet_context(
+            tweet_id, include_replies=include_replies, max_depth=max_depth
+        )
+        return context
+
+    async def get_quote_tweets(self, tweet_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get quote tweets of a specific tweet.
+
+        Args:
+            tweet_id: Tweet ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of quote tweets
+        """
+        tweet_id = validate_tweet_id(tweet_id)
+        limit = validate_limit(limit)
+        quotes = await self.client.get_quote_tweets(tweet_id, limit=limit)
+        return quotes
+
+    async def get_followers(self, user_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get followers for a user.
+
+        Args:
+            user_id: User ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of user objects for followers
+        """
+        from ..utils.validators import validate_user_id
+        user_id = validate_user_id(user_id)
+        limit = validate_limit(limit)
+        followers = await self.client.get_followers(user_id, limit=limit)
+        return followers
+
+    async def get_following(self, user_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get following list for a user.
+
+        Args:
+            user_id: User ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of user objects for accounts being followed
+        """
+        from ..utils.validators import validate_user_id
+        user_id = validate_user_id(user_id)
+        limit = validate_limit(limit)
+        following = await self.client.get_following(user_id, limit=limit)
+        return following
+
+    async def get_likers(self, tweet_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get users who liked a tweet.
+
+        Args:
+            tweet_id: Tweet ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of user objects who liked the tweet
+        """
+        tweet_id = validate_tweet_id(tweet_id)
+        limit = validate_limit(limit)
+        likers = await self.client.get_likers(tweet_id, limit=limit)
+        return likers
+
+    async def get_retweeters(self, tweet_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get users who retweeted a tweet.
+
+        Args:
+            tweet_id: Tweet ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of user objects who retweeted
+        """
+        tweet_id = validate_tweet_id(tweet_id)
+        limit = validate_limit(limit)
+        retweeters = await self.client.get_retweeters(tweet_id, limit=limit)
+        return retweeters
+
+    async def get_user_likes(self, user_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get tweets liked by a user.
+
+        Args:
+            user_id: User ID
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of tweet objects liked by the user
+        """
+        from ..utils.validators import validate_user_id
+        user_id = validate_user_id(user_id)
+        limit = validate_limit(limit)
+        likes = await self.client.get_user_likes(user_id, limit=limit)
+        return likes
+
+    async def get_home_timeline(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get authenticated user's home timeline.
+
+        Args:
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of tweets from home timeline
+        """
+        limit = validate_limit(limit)
+        timeline = await self.client.get_home_timeline(limit=limit)
+        return timeline
+
+    async def search_users(self, query: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Search for users by query.
+
+        Args:
+            query: Search query
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of user objects matching the query
+        """
+        query = validate_search_query(query)
+        limit = validate_limit(limit)
+        users = await self.client.search_users(query, limit=limit)
+        return users
+
+    async def get_lists(self, user_id: str) -> List[Dict[str, Any]]:
+        """
+        Get lists owned by a user.
+
+        Args:
+            user_id: User ID
+
+        Returns:
+            List of Twitter list objects
+        """
+        from ..utils.validators import validate_user_id
+        user_id = validate_user_id(user_id)
+        lists = await self.client.get_lists(user_id)
+        return lists
+
+    async def get_bookmarks(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get bookmarked tweets for authenticated user.
+
+        Args:
+            limit: Maximum number of results (default: 20, max: 100)
+
+        Returns:
+            List of bookmarked tweets
+        """
+        limit = validate_limit(limit)
+        bookmarks = await self.client.get_bookmarks(limit=limit)
+        return bookmarks
+
+    async def get_rate_limits(self) -> Dict[str, Any]:
+        """
+        Get current API rate limit status.
+
+        Returns:
+            Rate limit information for various endpoints
+        """
+        rate_limits = await self.client.get_rate_limits()
+        return rate_limits

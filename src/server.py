@@ -190,6 +190,306 @@ class MCPXServer:
                         "required": ["tweet_id"],
                     },
                 ),
+                # Phase 1: Core Gaps
+                Tool(
+                    name="quote_tweet",
+                    description="Create a quote tweet with commentary",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID to quote"},
+                            "text": {"type": "string", "description": "Quote comment text (max 280 chars)"},
+                            "media_ids": {"type": "array", "items": {"type": "string"}, "description": "Optional media IDs"},
+                        },
+                        "required": ["tweet_id", "text"],
+                    },
+                ),
+                Tool(
+                    name="get_tweet_context",
+                    description="Get full conversation thread and context for a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID"},
+                            "include_replies": {"type": "boolean", "description": "Include replies (default: true)"},
+                            "max_depth": {"type": "integer", "description": "Max depth for parent tweets (default: 10)"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="get_quote_tweets",
+                    description="Get quote tweets of a specific tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="follow_user",
+                    description="Follow a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to follow"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="unfollow_user",
+                    description="Unfollow a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to unfollow"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="get_followers",
+                    description="Get followers list for a user",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="get_following",
+                    description="Get following list for a user",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                # Phase 2: Intelligence
+                Tool(
+                    name="get_likers",
+                    description="Get users who liked a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="get_retweeters",
+                    description="Get users who retweeted a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="get_user_likes",
+                    description="Get tweets liked by a user",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="get_home_timeline",
+                    description="Get authenticated user's home timeline",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                    },
+                ),
+                # Phase 3: Operations
+                Tool(
+                    name="unlike_tweet",
+                    description="Remove like from a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID to unlike"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="unretweet",
+                    description="Remove retweet from a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID to unretweet"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="get_rate_limits",
+                    description="Get current API rate limit status",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {},
+                    },
+                ),
+                Tool(
+                    name="mute_user",
+                    description="Mute a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to mute"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="unmute_user",
+                    description="Unmute a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to unmute"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="block_user",
+                    description="Block a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to block"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="unblock_user",
+                    description="Unblock a user by ID",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID to unblock"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                # Phase 4: Advanced
+                Tool(
+                    name="get_lists",
+                    description="Get lists owned by a user",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "string", "description": "User ID"},
+                        },
+                        "required": ["user_id"],
+                    },
+                ),
+                Tool(
+                    name="create_list",
+                    description="Create a new Twitter list",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string", "description": "List name (max 25 chars)"},
+                            "description": {"type": "string", "description": "Optional list description"},
+                            "private": {"type": "boolean", "description": "Whether the list is private"},
+                        },
+                        "required": ["name"],
+                    },
+                ),
+                Tool(
+                    name="add_to_list",
+                    description="Add user to a list",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "list_id": {"type": "string", "description": "List ID"},
+                            "user_id": {"type": "string", "description": "User ID to add"},
+                        },
+                        "required": ["list_id", "user_id"],
+                    },
+                ),
+                Tool(
+                    name="remove_from_list",
+                    description="Remove user from a list",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "list_id": {"type": "string", "description": "List ID"},
+                            "user_id": {"type": "string", "description": "User ID to remove"},
+                        },
+                        "required": ["list_id", "user_id"],
+                    },
+                ),
+                Tool(
+                    name="search_users",
+                    description="Search for users by query",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "query": {"type": "string", "description": "Search query"},
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                        "required": ["query"],
+                    },
+                ),
+                Tool(
+                    name="bookmark_tweet",
+                    description="Bookmark a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID to bookmark"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="unbookmark_tweet",
+                    description="Remove bookmark from a tweet",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "tweet_id": {"type": "string", "description": "Tweet ID to unbookmark"},
+                        },
+                        "required": ["tweet_id"],
+                    },
+                ),
+                Tool(
+                    name="get_bookmarks",
+                    description="Get bookmarked tweets for authenticated user",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
+                        },
+                    },
+                ),
             ]
 
         @self.server.call_tool()
@@ -217,6 +517,62 @@ class MCPXServer:
                     result = await self.write_tools.retweet(**arguments)
                 elif name == "delete_tweet":
                     result = await self.write_tools.delete_tweet(**arguments)
+                # Phase 1: Core Gaps
+                elif name == "quote_tweet":
+                    result = await self.write_tools.quote_tweet(**arguments)
+                elif name == "get_tweet_context":
+                    result = await self.read_tools.get_tweet_context(**arguments)
+                elif name == "get_quote_tweets":
+                    result = await self.read_tools.get_quote_tweets(**arguments)
+                elif name == "follow_user":
+                    result = await self.write_tools.follow_user(**arguments)
+                elif name == "unfollow_user":
+                    result = await self.write_tools.unfollow_user(**arguments)
+                elif name == "get_followers":
+                    result = await self.read_tools.get_followers(**arguments)
+                elif name == "get_following":
+                    result = await self.read_tools.get_following(**arguments)
+                # Phase 2: Intelligence
+                elif name == "get_likers":
+                    result = await self.read_tools.get_likers(**arguments)
+                elif name == "get_retweeters":
+                    result = await self.read_tools.get_retweeters(**arguments)
+                elif name == "get_user_likes":
+                    result = await self.read_tools.get_user_likes(**arguments)
+                elif name == "get_home_timeline":
+                    result = await self.read_tools.get_home_timeline(**arguments)
+                # Phase 3: Operations
+                elif name == "unlike_tweet":
+                    result = await self.write_tools.unlike_tweet(**arguments)
+                elif name == "unretweet":
+                    result = await self.write_tools.unretweet(**arguments)
+                elif name == "get_rate_limits":
+                    result = await self.read_tools.get_rate_limits()
+                elif name == "mute_user":
+                    result = await self.write_tools.mute_user(**arguments)
+                elif name == "unmute_user":
+                    result = await self.write_tools.unmute_user(**arguments)
+                elif name == "block_user":
+                    result = await self.write_tools.block_user(**arguments)
+                elif name == "unblock_user":
+                    result = await self.write_tools.unblock_user(**arguments)
+                # Phase 4: Advanced
+                elif name == "get_lists":
+                    result = await self.read_tools.get_lists(**arguments)
+                elif name == "create_list":
+                    result = await self.write_tools.create_list(**arguments)
+                elif name == "add_to_list":
+                    result = await self.write_tools.add_to_list(**arguments)
+                elif name == "remove_from_list":
+                    result = await self.write_tools.remove_from_list(**arguments)
+                elif name == "search_users":
+                    result = await self.read_tools.search_users(**arguments)
+                elif name == "bookmark_tweet":
+                    result = await self.write_tools.bookmark_tweet(**arguments)
+                elif name == "unbookmark_tweet":
+                    result = await self.write_tools.unbookmark_tweet(**arguments)
+                elif name == "get_bookmarks":
+                    result = await self.read_tools.get_bookmarks(**arguments)
                 else:
                     raise ValueError(f"Unknown tool: {name}")
 
