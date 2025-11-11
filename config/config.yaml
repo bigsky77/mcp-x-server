@@ -1,0 +1,20 @@
+server:
+  name: "mcp-x-server"
+  version: "0.1.0"
+
+auth:
+  cookies_file: "config/cookies.json"
+  accounts_file: "accounts.json"
+
+rate_limits:
+  read:
+    requests_per_window: 300
+    window_seconds: 900  # 15 minutes
+  write:
+    requests_per_window: 50
+    window_seconds: 86400  # 24 hours
+
+retry:
+  max_attempts: 3
+  backoff_base: 2
+  backoff_max: 60

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mcp-x-server": {
+      "command": "python",
+      "args": ["-m", "src.server"],
+      "cwd": "/Users/bigsky/mcp-x-server",
+      "env": {}
+    }
+  }
+}
