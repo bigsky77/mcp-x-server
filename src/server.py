@@ -277,18 +277,6 @@ class MCPXServer:
                 ),
                 # Phase 2: Intelligence
                 Tool(
-                    name="get_likers",
-                    description="Get users who liked a tweet",
-                    inputSchema={
-                        "type": "object",
-                        "properties": {
-                            "tweet_id": {"type": "string", "description": "Tweet ID"},
-                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
-                        },
-                        "required": ["tweet_id"],
-                    },
-                ),
-                Tool(
                     name="get_retweeters",
                     description="Get users who retweeted a tweet",
                     inputSchema={
@@ -298,28 +286,6 @@ class MCPXServer:
                             "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
                         },
                         "required": ["tweet_id"],
-                    },
-                ),
-                Tool(
-                    name="get_user_likes",
-                    description="Get tweets liked by a user",
-                    inputSchema={
-                        "type": "object",
-                        "properties": {
-                            "user_id": {"type": "string", "description": "User ID"},
-                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
-                        },
-                        "required": ["user_id"],
-                    },
-                ),
-                Tool(
-                    name="get_home_timeline",
-                    description="Get authenticated user's home timeline",
-                    inputSchema={
-                        "type": "object",
-                        "properties": {
-                            "limit": {"type": "integer", "description": "Max results (default: 20, max: 100)"},
-                        },
                     },
                 ),
                 # Phase 3: Operations
@@ -398,17 +364,6 @@ class MCPXServer:
                     },
                 ),
                 # Phase 4: Advanced
-                Tool(
-                    name="get_lists",
-                    description="Get lists owned by a user",
-                    inputSchema={
-                        "type": "object",
-                        "properties": {
-                            "user_id": {"type": "string", "description": "User ID"},
-                        },
-                        "required": ["user_id"],
-                    },
-                ),
                 Tool(
                     name="create_list",
                     description="Create a new Twitter list",
@@ -533,14 +488,8 @@ class MCPXServer:
                 elif name == "get_following":
                     result = await self.read_tools.get_following(**arguments)
                 # Phase 2: Intelligence
-                elif name == "get_likers":
-                    result = await self.read_tools.get_likers(**arguments)
                 elif name == "get_retweeters":
                     result = await self.read_tools.get_retweeters(**arguments)
-                elif name == "get_user_likes":
-                    result = await self.read_tools.get_user_likes(**arguments)
-                elif name == "get_home_timeline":
-                    result = await self.read_tools.get_home_timeline(**arguments)
                 # Phase 3: Operations
                 elif name == "unlike_tweet":
                     result = await self.write_tools.unlike_tweet(**arguments)
@@ -557,8 +506,6 @@ class MCPXServer:
                 elif name == "unblock_user":
                     result = await self.write_tools.unblock_user(**arguments)
                 # Phase 4: Advanced
-                elif name == "get_lists":
-                    result = await self.read_tools.get_lists(**arguments)
                 elif name == "create_list":
                     result = await self.write_tools.create_list(**arguments)
                 elif name == "add_to_list":

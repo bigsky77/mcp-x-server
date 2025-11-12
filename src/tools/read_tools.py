@@ -168,22 +168,6 @@ class ReadTools:
         following = await self.client.get_following(user_id, limit=limit)
         return following
 
-    async def get_likers(self, tweet_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """
-        Get users who liked a tweet.
-
-        Args:
-            tweet_id: Tweet ID
-            limit: Maximum number of results (default: 20, max: 100)
-
-        Returns:
-            List of user objects who liked the tweet
-        """
-        tweet_id = validate_tweet_id(tweet_id)
-        limit = validate_limit(limit)
-        likers = await self.client.get_likers(tweet_id, limit=limit)
-        return likers
-
     async def get_retweeters(self, tweet_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
         """
         Get users who retweeted a tweet.
@@ -200,37 +184,6 @@ class ReadTools:
         retweeters = await self.client.get_retweeters(tweet_id, limit=limit)
         return retweeters
 
-    async def get_user_likes(self, user_id: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """
-        Get tweets liked by a user.
-
-        Args:
-            user_id: User ID
-            limit: Maximum number of results (default: 20, max: 100)
-
-        Returns:
-            List of tweet objects liked by the user
-        """
-        from ..utils.validators import validate_user_id
-        user_id = validate_user_id(user_id)
-        limit = validate_limit(limit)
-        likes = await self.client.get_user_likes(user_id, limit=limit)
-        return likes
-
-    async def get_home_timeline(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """
-        Get authenticated user's home timeline.
-
-        Args:
-            limit: Maximum number of results (default: 20, max: 100)
-
-        Returns:
-            List of tweets from home timeline
-        """
-        limit = validate_limit(limit)
-        timeline = await self.client.get_home_timeline(limit=limit)
-        return timeline
-
     async def search_users(self, query: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
         """
         Search for users by query.
@@ -246,21 +199,6 @@ class ReadTools:
         limit = validate_limit(limit)
         users = await self.client.search_users(query, limit=limit)
         return users
-
-    async def get_lists(self, user_id: str) -> List[Dict[str, Any]]:
-        """
-        Get lists owned by a user.
-
-        Args:
-            user_id: User ID
-
-        Returns:
-            List of Twitter list objects
-        """
-        from ..utils.validators import validate_user_id
-        user_id = validate_user_id(user_id)
-        lists = await self.client.get_lists(user_id)
-        return lists
 
     async def get_bookmarks(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
         """
