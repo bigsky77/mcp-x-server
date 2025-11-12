@@ -204,7 +204,8 @@ class TwscrapeClient:
     async def search_users(self, query: str, limit: int = 20) -> List[dict]:
         """Search for users by query."""
         try:
-            users = await gather(self.api.search_users(query, limit=limit))
+            # Fixed: twscrape uses search_user (singular) not search_users (plural)
+            users = await gather(self.api.search_user(query, limit=limit))
             return [self._serialize_user(u) for u in users]
         except Exception as e:
             raise Exception(f"Failed to search users: {e}")

@@ -11,8 +11,8 @@ Minimalist X (Twitter) MCP server providing read and write primitives.
 # Verify
 ./scripts/verify.sh
 
-# Add to Claude Code
-claude mcp add mcp-x-server python -m src.server --cwd /Users/bigsky/mcp-x-server
+# Add to Claude Code (from project directory)
+claude mcp add mcp-x-server -- "$(pwd)/venv/bin/python" -m src.server
 ```
 
 ## MCP Tools (35 Total)
@@ -120,9 +120,15 @@ Once connected to Claude Code:
 
 ## Documentation
 
+### Installation & Setup
+- [QUICK_INSTALL.md](docs/QUICK_INSTALL.md) - 3-minute setup guide ⚡
+- [INSTALLATION.md](docs/INSTALLATION.md) - Detailed installation for any directory
+- [TESTING_AND_USAGE.md](docs/TESTING_AND_USAGE.md) - Testing and usage examples
+
+### Development
 - [QUICKSTART.md](docs/QUICKSTART.md) - Getting started guide
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) - System design
-- [SETUP.md](docs/SETUP.md) - Detailed installation
+- [SETUP.md](docs/SETUP.md) - Detailed setup
 - [DEVELOPMENT.md](docs/DEVELOPMENT.md) - Developer guide
 
 ## Requirements
@@ -133,6 +139,12 @@ Once connected to Claude Code:
 
 ## Status
 
-✓ Ready for production use
-✓ All tests passing
-✓ 35 MCP tools available
+✅ Ready for production use
+✅ Server module tested and working
+✅ **31 of 35 tools working (89% success rate)**
+⚠️ 4 tools disabled due to twscrape API limitations (see [Issue #1](https://github.com/bigsky77/mcp-x-server/issues/1))
+
+### Recent Fixes
+- ✅ Fixed `search_users` method (was using plural instead of singular)
+- ✅ Updated installation command with correct syntax
+- ✅ Added comprehensive installation and testing guides
