@@ -1,150 +1,170 @@
 # MCP X Server
 
-Minimalist X (Twitter) MCP server providing read and write primitives.
+Minimalist X (Twitter) MCP server with 35 tools for Claude Code.
 
-## Quick Start
+## Quick Install (3 Steps)
 
 ```bash
-# Setup
+# 1. Clone and setup
+git clone https://github.com/bigsky77/mcp-x-server.git
+cd mcp-x-server
 ./scripts/setup.sh
 
-# Verify
-./scripts/verify.sh
+# 2. Add your cookies (export from browser while logged into twitter.com)
+# Save to config/cookies.json
 
-# Add to Claude Code (from project directory)
-claude mcp add mcp-x-server -- "$(pwd)/venv/bin/python" -m src.server
+# 3. Add to Claude Code
+claude mcp add mcp-x-server "$(pwd)/venv/bin/python" -m src.server
 ```
 
-## MCP Tools (35 Total)
+Test it works:
+```bash
+claude mcp call mcp-x-server search_tweets '{"query":"AI", "limit":1}'
+```
 
-### Basic Read Operations (5 tools)
-- `search_tweets` - Search tweets by keyword/hashtag
-- `get_tweet` - Get single tweet by ID
-- `get_user_tweets` - Get user timeline
-- `get_user` - Get user profile
-- `get_mentions` - Get mentions
+## What You Get
 
-### Basic Write Operations (5 tools)
-- `post_tweet` - Post new tweet
-- `reply_to_tweet` - Reply to tweet
-- `like_tweet` - Like tweet
-- `retweet` - Retweet
-- `delete_tweet` - Delete tweet
+**35 MCP Tools** organized by category:
+
+### Basic Operations (10 tools)
+- Search tweets, get user profiles, timelines, mentions
+- Post tweets, reply, like, retweet, delete
 
 ### Engagement & Context (7 tools)
-- `quote_tweet` - Create quote tweet with commentary
-- `get_tweet_context` - Get full conversation thread
-- `get_quote_tweets` - Get all quote tweets of a tweet
-- `get_likers` - Get users who liked a tweet
-- `get_retweeters` - Get users who retweeted
-- `get_user_likes` - Get tweets liked by user
-- `get_home_timeline` - Get authenticated user's timeline
+- Quote tweets with commentary
+- Get full conversation threads
+- See who liked/retweeted
+- Get user's liked tweets
+- Access home timeline
 
-### Relationship Management (4 tools)
-- `follow_user` - Follow a user
-- `unfollow_user` - Unfollow a user
-- `get_followers` - Get user's followers
-- `get_following` - Get users a user follows
+### Relationships (4 tools)
+- Follow/unfollow users
+- Get followers and following lists
 
-### Moderation & Cleanup (6 tools)
-- `unlike_tweet` - Remove a like
-- `unretweet` - Remove a retweet
-- `mute_user` - Mute a user
-- `unmute_user` - Unmute a user
-- `block_user` - Block a user
-- `unblock_user` - Unblock a user
+### Moderation (6 tools)
+- Unlike tweets, remove retweets
+- Mute/unmute, block/unblock users
 
-### List Management (4 tools)
-- `get_lists` - Get user's lists
-- `create_list` - Create new list
-- `add_to_list` - Add user to list
-- `remove_from_list` - Remove user from list
+### Lists (4 tools)
+- Create and manage Twitter lists
+- Add/remove users from lists
 
-### Discovery & Monitoring (4 tools)
-- `search_users` - Search for users
-- `bookmark_tweet` - Bookmark a tweet
-- `unbookmark_tweet` - Remove bookmark
-- `get_bookmarks` - Get bookmarked tweets
-- `get_rate_limits` - Check API rate limit status
+### Discovery (4 tools)
+- Search users
+- Bookmark tweets
+- Check rate limits
 
-## Usage Examples
+**See [docs/API_REFERENCE.md](docs/API_REFERENCE.md) for complete tool parameters.**
 
-Once connected to Claude Code:
+## Usage
 
-**Basic Operations:**
+Just ask Claude in natural language:
+
 ```
-"Search for tweets about #AI with limit 10"
+"Search for tweets about AI"
 "Get the latest tweets from @sama"
 "Post a tweet: Hello from MCP X Server!"
-"Get user profile for @elonmusk"
-```
-
-**Engagement & Context:**
-```
-"Quote tweet 1234567890 with: Great insights on AI!"
+"Quote tweet 1234567890 with: Great insights!"
 "Get the full conversation thread for tweet 1234567890"
-"Who liked tweet 1234567890?"
-"Show me tweets liked by @sama"
-```
-
-**Relationship Management:**
-```
 "Follow @elonmusk and add them to my AI Leaders list"
-"Get followers of @sama"
-"Unfollow @username"
-```
-
-**List Organization:**
-```
 "Create a private list called AI Researchers"
-"Add @sama to my AI Leaders list"
-"Show me all my lists"
-```
-
-**Monitoring:**
-```
 "Check my rate limits"
-"Get my home timeline"
-"Show my bookmarked tweets"
 ```
 
 ## Architecture
 
 **Simple three-file design:**
-- `twikit_client.py` - Write operations (posting, liking, following, etc.)
-- `twscrape_client.py` - Read operations (searching, fetching, tracking)
-- `server.py` - MCP server exposing 35 tools
+- `twikit_client.py` - Write operations (posting, liking, etc.)
+- `twscrape_client.py` - Read operations (searching, fetching)
+- `server.py` - MCP server with 35 tools
 
-**Authentication:** Cookie-based (extract from browser)
-**Rate Limits:** 300 reads/15min, 50 writes/24h
+**Authentication:** Cookie-based (export from browser)
+**Rate Limits:** ~300 reads/15min, ~50 writes/24h
 
-## Documentation
+## Status
 
-### Installation & Setup
-- [QUICK_INSTALL.md](docs/QUICK_INSTALL.md) - 3-minute setup guide ⚡
-- [INSTALLATION.md](docs/INSTALLATION.md) - Detailed installation for any directory
-- [TESTING_AND_USAGE.md](docs/TESTING_AND_USAGE.md) - Testing and usage examples
+✅ **31 of 35 tools working** (89% success rate)
 
-### Development
-- [QUICKSTART.md](docs/QUICKSTART.md) - Getting started guide
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - System design
-- [SETUP.md](docs/SETUP.md) - Detailed setup
-- [DEVELOPMENT.md](docs/DEVELOPMENT.md) - Developer guide
+⚠️ 4 tools limited by twscrape API:
+- `get_home_timeline`
+- `get_lists`
+- `get_likers`
+- `get_user_likes`
+
+See [Issue #1](https://github.com/bigsky77/mcp-x-server/issues/1) for workarounds.
+
+## Troubleshooting
+
+**Server not starting?**
+```bash
+# Check Python version (need 3.10+)
+python3 --version
+
+# Manually test
+cd mcp-x-server
+source venv/bin/activate
+python -m src.server
+# Press Ctrl+C to stop
+```
+
+**Cookie issues?**
+```bash
+# Validate cookies file
+cat config/cookies.json | python -m json.tool
+```
+
+**Install from another directory?**
+```bash
+# From your project directory
+git clone https://github.com/bigsky77/mcp-x-server.git
+cd mcp-x-server
+./scripts/setup.sh
+# Add cookies to config/cookies.json
+claude mcp add mcp-x-server "$(pwd)/venv/bin/python" -m src.server
+```
 
 ## Requirements
 
 - Python 3.10+
 - X (Twitter) account cookies
-- TwiKit and Twscrape libraries
+- Claude Code installed
 
-## Status
+## Project Structure
 
-✅ Ready for production use
-✅ Server module tested and working
-✅ **31 of 35 tools working (89% success rate)**
-⚠️ 4 tools disabled due to twscrape API limitations (see [Issue #1](https://github.com/bigsky77/mcp-x-server/issues/1))
+```
+mcp-x-server/
+├── config/
+│   ├── config.yaml         # Server configuration
+│   └── cookies.json        # Auth cookies (you provide)
+├── src/
+│   ├── server.py           # MCP server (35 tools)
+│   ├── auth/               # Cookie authentication
+│   ├── clients/            # TwiKit + Twscrape clients
+│   └── utils/              # Rate limiting
+├── scripts/
+│   ├── setup.sh            # Install dependencies
+│   └── verify.sh           # Test installation
+└── docs/
+    └── API_REFERENCE.md    # Complete tool documentation
+```
 
-### Recent Fixes
-- ✅ Fixed `search_users` method (was using plural instead of singular)
-- ✅ Updated installation command with correct syntax
-- ✅ Added comprehensive installation and testing guides
+## Documentation
+
+- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete tool list with parameters
+- **[GitHub Issues](https://github.com/bigsky77/mcp-x-server/issues)** - Report bugs
+
+## Contributing
+
+Contributions welcome! Focus areas:
+- Fix the 4 limited tools (twscrape alternatives)
+- Add more engagement tools
+- Improve error handling
+
+## License
+
+MIT License - See LICENSE file for details
+
+---
+
+**Built with:** TwiKit, Twscrape, MCP SDK
+**Compatible with:** Claude Code (Anthropic)
