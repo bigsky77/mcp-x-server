@@ -1,6 +1,6 @@
 # MCP X Server - API Reference
 
-Complete reference for all 35 MCP tools.
+Complete reference for all 32 MCP tools.
 
 ## Basic Read Operations (5 tools)
 
@@ -96,7 +96,7 @@ Delete own tweet by ID.
 
 ---
 
-## Engagement & Context (7 tools)
+## Engagement & Context (5 tools)
 
 ### quote_tweet
 Create a quote tweet with commentary.
@@ -127,15 +127,6 @@ Get quote tweets of a specific tweet.
 
 **Example:** `{"tweet_id": "1234567890", "limit": 20}`
 
-### get_likers
-Get users who liked a tweet. ⚠️ Limited by twscrape API.
-
-**Parameters:**
-- `tweet_id` (string, required) - Tweet ID
-- `limit` (integer) - Max results (default: 20, max: 100)
-
-**Example:** `{"tweet_id": "1234567890", "limit": 20}`
-
 ### get_retweeters
 Get users who retweeted a tweet.
 
@@ -144,23 +135,6 @@ Get users who retweeted a tweet.
 - `limit` (integer) - Max results (default: 20, max: 100)
 
 **Example:** `{"tweet_id": "1234567890", "limit": 20}`
-
-### get_user_likes
-Get tweets liked by user. ⚠️ Limited by twscrape API.
-
-**Parameters:**
-- `user_id` (string, required) - User ID
-- `limit` (integer) - Max results (default: 20, max: 100)
-
-**Example:** `{"user_id": "1234567890", "limit": 20}`
-
-### get_home_timeline
-Get authenticated user's home timeline. ⚠️ Limited by twscrape API.
-
-**Parameters:**
-- `limit` (integer) - Max results (default: 20, max: 100)
-
-**Example:** `{"limit": 20}`
 
 ---
 
@@ -254,15 +228,7 @@ Unblock a user by ID.
 
 ---
 
-## List Management (4 tools)
-
-### get_lists
-Get lists owned by a user. ⚠️ Limited by twscrape API.
-
-**Parameters:**
-- `user_id` (string, required) - User ID
-
-**Example:** `{"user_id": "1234567890"}`
+## List Management (3 tools)
 
 ### create_list
 Create a new Twitter list.
@@ -391,13 +357,7 @@ Use `get_rate_limits` to check current quotas.
 
 ## Notes
 
-⚠️ **4 tools have limitations** due to twscrape API constraints:
-- `get_home_timeline`
-- `get_lists`
-- `get_likers`
-- `get_user_likes`
-
-These tools are implemented but may return limited data. See [Issue #1](https://github.com/bigsky77/mcp-x-server/issues/1) for workarounds.
+All 32 tools are fully functional using the TwiKit and Twscrape clients.
 
 ## Getting User/Tweet IDs
 
