@@ -13,6 +13,7 @@ from mcp.types import Tool, TextContent
 from .auth.account_manager import AccountManager
 from .clients.twikit_client import TwiKitClient
 from .clients.twscrape_client import TwscrapeClient
+from .clients.twitterapi_client import TwitterAPIClient
 from .tools.read_tools import ReadTools
 from .tools.post_tools import WriteTools
 from .utils.rate_limiter import RateLimiter, RateLimitConfig
@@ -38,12 +39,11 @@ class MCPXServer:
         # Initialize clients
         cookies = self.account_manager.load_cookies()
         self.twikit_client = TwiKitClient(cookies)
-        self.twscrape_client = TwscrapeClient(
-            accounts_file=self.config["auth"].get("accounts_file")
-        )
+        # Use TwitterAPI.io for read operations
+        self.twitterapi_client = TwitterAPIClient()
 
         # Initialize tools
-        self.read_tools = ReadTools(self.twscrape_client)
+        self.read_tools = ReadTools(self.twitterapi_client)
         self.write_tools = WriteTools(self.twikit_client)
 
         # Initialize rate limiter
@@ -586,8 +586,7 @@ class MCPXServer:
         """Run the MCP server."""
         logger.info("Starting MCP X Server...")
 
-        # Setup clients
-        await self.twscrape_client.setup()
+        # No async setup needed for TwitterAPI.io client
 
         async with stdio_server() as (read_stream, write_stream):
             await self.server.run(
